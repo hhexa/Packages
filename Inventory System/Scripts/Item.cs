@@ -2,26 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Credit to Kryzarel for his Inventory Tutorial on Youtube
+//Link to the tutorial series: https://www.youtube.com/watch?v=bTPEMt1RG3s
+
 namespace InventorySystem
 {
-    [System.Serializable]
-    public class Item
+    [CreateAssetMenu(menuName = "Create Item")]
+    public class Item : ScriptableObject
     {
         [SerializeField]
         protected string displayName;
 
         [SerializeField]
         protected Sprite icon;
-
-        public Item()
-        {
-        }
-
-        public Item(string displayName, Sprite icon)
-        {
-            this.displayName = displayName;
-            this.icon = icon;
-        }
 
         public virtual void UseItem()
         {

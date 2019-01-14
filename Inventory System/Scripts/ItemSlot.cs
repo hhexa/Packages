@@ -3,17 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//Credit to Kryzarel for his Inventory Tutorial on Youtube
+//Link to the tutorial series: https://www.youtube.com/watch?v=bTPEMt1RG3s
+
 namespace InventorySystem
 {
     public class ItemSlot : MonoBehaviour
     {
-        private Item _item;
 
+        [SerializeField]
+        private Image image;
+
+        private Item _item;
         public Item Item
         {
-            get { return _item; }
+            get
+            {
+                return _item;
+            }
             set
             {
+                _item = value;
                 if (_item == null)
                 {
                     image.enabled = false;
@@ -26,24 +36,13 @@ namespace InventorySystem
             }
         }
 
-        [SerializeField]
-        private Image image;
-
-        private int slotID = 0;
-        public static int idCounter = 0;
-
         private void OnValidate()
         {
             if (image == null)
             {
                 image = GetComponent<Image>();
             }
-        }
 
-        private void Awake()
-        {
-            idCounter++;
-            slotID = idCounter;
         }
     }
 }
