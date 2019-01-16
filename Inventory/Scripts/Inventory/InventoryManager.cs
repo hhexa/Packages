@@ -2,14 +2,11 @@ using UnityEngine;
 
 namespace Kira.InventorySystem
 {
-    // <summary>
-    // Manages interactions between the inventory
-    // and the equipment panel
-    // </summary>
+    /// <summary>
+    ///Manages interactions between the inventory
+    /// and the equipment panel
+    ///</summary>
 
-    // [RequireComponent(typeof(StatsManager))]
-    // [RequireComponent(typeof(Inventory))]
-    // [RequireComponent(typeof(EquipmentPanel))]
     public class InventoryManager : MonoBehaviour
     {
 
