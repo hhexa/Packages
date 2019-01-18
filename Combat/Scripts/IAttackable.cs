@@ -1,7 +1,8 @@
 ﻿namespace Kira.Combat
 {
-    public class IAttackable
+    public interface IAttackable
     {
-        
+        void TakeDamage(float damage);
+        void Die();
     }
 }

@@ -13,7 +13,7 @@ namespace Kira.Combat
         private Ray ray;
         public event Action OnShootEvent;
 
-        private Attackable lastTarget;
+        private IAttackable lastTarget;
 
         private void Update()
         {
@@ -21,14 +21,6 @@ namespace Kira.Combat
 
             if (Input.GetKey(KeyCode.Space))
                 Shoot();
-        }
-
-        private void OnGUI()
-        {
-            if (lastTarget != null)
-            {
-                GUI.Label(new Rect(15, 15, 100, 100), "Health: " + lastTarget.Health);
-            }
         }
 
         private void Shoot()
@@ -46,7 +38,7 @@ namespace Kira.Combat
                     OnShootEvent();
                 }
 
-                Attackable target = hit.transform.GetComponent<Attackable>();
+                IAttackable target = hit.transform.GetComponent<IAttackable>();
 
 
                 if (target != null)

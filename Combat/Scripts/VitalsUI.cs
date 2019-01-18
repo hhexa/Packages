@@ -44,13 +44,6 @@ namespace Kira.Combat
             }
         }
 
-        private void Update()
-        {
-#if UNITYEDITOR
-            Debug.Log("yo");
-            RefreshUI();
-#endif
-        }
         public void RefreshUI()
         {
             float fill = vitals.Health / vitals.MaxHealth;

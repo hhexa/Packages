@@ -1,16 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Kira.Stats
+namespace Kira.Characters
 {
+    [System.Serializable]
     public class Stat
     {
-        private string displayName;
-        private float totalValue;
-        private float baseValue;
+        [SerializeField] private string displayName;
+        [SerializeField] private float totalValue;
+        [SerializeField] private float baseValue;
 
-        public List<StatMod> statMods = new List<StatMod>();
-
+        private List<StatMod> statMods = new List<StatMod>();
         private bool isDirty = true;
 
         public void AddMod(StatMod mod)
