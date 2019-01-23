@@ -1,4 +1,5 @@
 using UnityEngine;
+using Kira.Characters;
 
 namespace Kira.InventorySystem
 {
@@ -10,9 +11,10 @@ namespace Kira.InventorySystem
     public class InventoryManager : MonoBehaviour
     {
 
-        [SerializeField] Inventory inventory;
-        [SerializeField] EquipmentPanel equipmentPanel;
-        [SerializeField] StatsManager statsManager;
+        [SerializeField] protected Inventory inventory;
+        [SerializeField] protected EquipmentPanel equipmentPanel;
+        [SerializeField] PlayerStats statsManager;
+        [SerializeField] private ItemToolTip itemToolTip;
 
         //<summary>
         //Equipping Items from the Inventory to the Equipment Panel
@@ -20,17 +22,36 @@ namespace Kira.InventorySystem
         //And then place the replaced item back in the inventory
         //</summary>
 
-        private void Awake()
+        protected virtual void Awake()
         {
             inventory.OnItemRightClickedEvent += EquipFromInventory;
             equipmentPanel.OnItemRightClickedEvent += UnEquipFromEquipPanel;
 
-            //Add Listeners on StatManager class
+            // Add Listeners on StatManager class
             inventory.OnItemRightClickedEvent += statsManager.OnItemEquip;
             equipmentPanel.OnItemRightClickedEvent += statsManager.OnItemUnEquip;
         }
 
-        private void EquipFromInventory(Item item)
+        private void Start()
+        {
+            //Get item tool tip
+            itemToolTip = ItemToolTip.instance;
+
+            //Tool tip listeners
+            inventory.OnPointerEnterEvent += ShowToolTip;
+            inventory.OnPointerExitEvent += HideToolTip;
+        }
+
+        private void ShowToolTip(Item item)
+        {
+            itemToolTip.ShowToolTip(item);
+        }
+        private void HideToolTip()
+        {
+            itemToolTip.HideToolTip();
+        }
+
+        protected virtual void EquipFromInventory(Item item)
         {
             if (item is EquippableItem)
             {
@@ -38,7 +59,7 @@ namespace Kira.InventorySystem
             }
         }
 
-        private void UnEquipFromInventory(Item item)
+        protected virtual void UnEquipFromInventory(Item item)
         {
             if (item is EquippableItem)
             {
@@ -46,7 +67,7 @@ namespace Kira.InventorySystem
             }
         }
 
-        private void EquipFromEquipPanel(Item item)
+        protected virtual void EquipFromEquipPanel(Item item)
         {
             if (item is EquippableItem)
             {
@@ -54,7 +75,7 @@ namespace Kira.InventorySystem
             }
         }
 
-        private void UnEquipFromEquipPanel(Item item)
+        protected virtual void UnEquipFromEquipPanel(Item item)
         {
             if (item is EquippableItem)
             {
@@ -62,7 +83,7 @@ namespace Kira.InventorySystem
             }
         }
 
-        public void Equip(EquippableItem item)
+        public virtual void Equip(EquippableItem item)
         {
             if (inventory.RemoveItem(item))
             {
@@ -73,7 +94,9 @@ namespace Kira.InventorySystem
                     //If the equip slot already has an item
                     if (previousItem != null)
                     {
+                        //Removes previous Items Stats from Character
                         statsManager.OnItemUnEquip(previousItem);
+
                         //Add that item to the inventory
                         inventory.AddItem(previousItem);
                     }
@@ -87,7 +110,7 @@ namespace Kira.InventorySystem
             }
         }
 
-        public void UnEquip(EquippableItem item)
+        public virtual void UnEquip(EquippableItem item)
         {
             if (!inventory.IsFull() && equipmentPanel.RemoveItem(item))
             {

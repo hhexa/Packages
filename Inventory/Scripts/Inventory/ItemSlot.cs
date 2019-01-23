@@ -8,11 +8,12 @@ using System;
 
 namespace Kira.InventorySystem
 {
-    public class ItemSlot : MonoBehaviour, IPointerClickHandler
+    public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField]
         protected Image image;
         protected Item _item;
+        protected bool refreshOnValidate;
 
         public Item Item
         {
@@ -36,6 +37,24 @@ namespace Kira.InventorySystem
         }
 
         public event Action<Item> OnRightClickEvent;
+        public event Action<Item> OnPointerEnterEvent;
+        public event Action OnPointerExitEvent;
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            if (Item != null)
+            {
+                OnPointerEnterEvent?.Invoke(Item);
+            }
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            if (Item != null)
+            {
+                OnPointerExitEvent?.Invoke();
+            }
+        }
 
         public void OnPointerClick(PointerEventData eventData)
         {
@@ -50,8 +69,15 @@ namespace Kira.InventorySystem
 
         protected virtual void OnValidate()
         {
+            if (refreshOnValidate == false)
+            {
+                return;
+            }
+
             if (image == null)
+            {
                 image = transform.GetChild(1).GetComponent<Image>();
+            }
         }
     }
 }

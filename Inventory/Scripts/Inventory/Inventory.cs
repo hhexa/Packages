@@ -19,6 +19,8 @@ namespace Kira.InventorySystem
         [SerializeField] ItemSlot[] itemSlots;
 
         public event Action<Item> OnItemRightClickedEvent;
+        public event Action<Item> OnPointerEnterEvent;
+        public event Action OnPointerExitEvent;
 
         private void OnValidate()
         {
@@ -33,6 +35,8 @@ namespace Kira.InventorySystem
             for (int i = 0; i < itemSlots.Length; i++)
             {
                 itemSlots[i].OnRightClickEvent += OnItemRightClickedEvent;
+                itemSlots[i].OnPointerEnterEvent += OnPointerEnterEvent;
+                itemSlots[i].OnPointerExitEvent += OnPointerExitEvent;
             }
         }
 
