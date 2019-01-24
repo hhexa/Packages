@@ -30,6 +30,7 @@ namespace Kira.InventorySystem
             // Add Listeners on StatManager class
             inventory.OnItemRightClickedEvent += statsManager.OnItemEquip;
             equipmentPanel.OnItemRightClickedEvent += statsManager.OnItemUnEquip;
+
         }
 
         private void Start()
@@ -40,12 +41,15 @@ namespace Kira.InventorySystem
             //Tool tip listeners
             inventory.OnPointerEnterEvent += ShowToolTip;
             inventory.OnPointerExitEvent += HideToolTip;
+            equipmentPanel.OnPointerEnterEvent += ShowToolTip;
+            equipmentPanel.OnPointerExitEvent += HideToolTip;
         }
 
         private void ShowToolTip(Item item)
         {
             itemToolTip.ShowToolTip(item);
         }
+
         private void HideToolTip()
         {
             itemToolTip.HideToolTip();
@@ -85,6 +89,8 @@ namespace Kira.InventorySystem
 
         public virtual void Equip(EquippableItem item)
         {
+            HideToolTip();
+
             if (inventory.RemoveItem(item))
             {
                 EquippableItem previousItem;
@@ -99,6 +105,7 @@ namespace Kira.InventorySystem
 
                         //Add that item to the inventory
                         inventory.AddItem(previousItem);
+                        ShowToolTip(previousItem);
                     }
                 }
                 else
@@ -112,6 +119,7 @@ namespace Kira.InventorySystem
 
         public virtual void UnEquip(EquippableItem item)
         {
+            HideToolTip();
             if (!inventory.IsFull() && equipmentPanel.RemoveItem(item))
             {
                 inventory.AddItem(item);

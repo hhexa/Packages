@@ -10,28 +10,30 @@ namespace Kira.InventorySystem
 {
     public class ItemToolTip : SerializedMonoBehaviour
     {
-        //Item name Text
+        public static ItemToolTip instance;
+
+
+        //UI Text variables
         [SerializeField] private TextMeshProUGUI _titleText;
-        //Stat Text's
         [SerializeField] private TextMeshProUGUI _staminaText;
         [SerializeField] private TextMeshProUGUI _strengthText;
         [SerializeField] private TextMeshProUGUI _intellectText;
-
         [SerializeField] private Transform statsPanel;
+
+        private Vector2 offset;
         private RectTransform toolTipRect;
+        private float normalHeight = 222f;//The normal height of the tool tip
+        private float onlyNameHeight = 80f;//The height to only show the items name ( when we dont need to show the items Stats )
+        private bool toolTipOn;
 
-        //The normal height of the tool tip
-        private float normalHeight = 222f;
-        //The height to only show the items name ( when we dont need to show the items Stats )
-        private float onlyNameHeight = 80f;
-
-        public static ItemToolTip instance;
+        private Canvas canvas;
 
         private void Awake()
         {
             if (instance == null) instance = this;
             else Destroy(gameObject);
 
+            canvas = GetComponentInParent<Canvas>();
             toolTipRect = GetComponent<RectTransform>();
         }
 
@@ -60,9 +62,24 @@ namespace Kira.InventorySystem
                 toolTipRect.sizeDelta = new Vector2(toolTipRect.sizeDelta.x, onlyNameHeight);
             }
 
+            toolTipOn = true;
             gameObject.SetActive(true);
         }
 
-        public void HideToolTip() { gameObject.SetActive(false); }
+        private void LateUpdate()
+        {
+            if (!toolTipOn) return;
+            offset.y = toolTipRect.sizeDelta.y;
+
+            Vector2 pos;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, Input.mousePosition, canvas.worldCamera, out pos);
+            toolTipRect.transform.position = canvas.transform.TransformPoint(pos + offset);
+        }
+
+        public void HideToolTip()
+        {
+            gameObject.SetActive(false);
+            toolTipOn = false;
+        }
     }
 }

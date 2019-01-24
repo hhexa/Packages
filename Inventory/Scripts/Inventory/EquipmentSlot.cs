@@ -11,9 +11,11 @@ namespace Kira.InventorySystem
 
         protected override void OnValidate()
         {
-            if (image == null)
-                image = GetComponent<Image>();
-            gameObject.name = equipmentType.ToString() + " Slot";
+            if (refreshOnValidate)
+            {
+                base.OnValidate();
+                gameObject.name = equipmentType.ToString() + " Slot";
+            }
         }
     }
 }
