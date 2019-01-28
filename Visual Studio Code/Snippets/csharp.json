@@ -5,7 +5,6 @@
 	//${1:label}
 	//${2:another} for placeholders.
 	//Placeholders with the same ids are connected.
-
 	// Example:
 	// "Print to console": {
 	// 	"prefix": "log",
@@ -15,8 +14,19 @@
 	// 	],
 	// 	"description": "Log output to console"
 	// }
-
-
+	//Formating Snippets
+	"Insert Brackets": {
+		"prefix": "b",
+		"body": "{\n\t$0\n}"
+	},
+	"Insert Parantheses": {
+		"prefix": "r",
+		"body": "();$0"
+	},
+	"Insert Parantheses and Brackets": {
+		"prefix": "t",
+		"body": "()\n{\n\t$0\n}"
+	},
 	//Variables Snippets
 	"Insert Public Variable": {
 		"prefix": "p",
@@ -25,13 +35,11 @@
 		],
 		"description": "Insert Public Variables"
 	},
-
 	//Getter & Setter
 	"Getter and Setter": {
 		"prefix": "g",
 		"body": "public ${1:Type} ${2:Name} { get { return ${3:variable}; } set { ${3:variable} = value; } }"
 	},
-
 	"Insert Protected Variable": {
 		"prefix": "pr",
 		"body": [
@@ -39,7 +47,6 @@
 		],
 		"description": "Insert Protected Variables"
 	},
-
 	"Insert Private Variable": {
 		"prefix": "pv",
 		"body": [
@@ -47,12 +54,13 @@
 		],
 		"description": "Insert Private Variables"
 	},
-
 	"Inserts SerializedField Tag": {
-		"prefix": ["se", "sr"],
+		"prefix": [
+			"se",
+			"sr"
+		],
 		"body": "[SerializeField] "
 	},
-
 	//List Snippet
 	"Insert List": {
 		"prefix": "List",
@@ -60,7 +68,6 @@
 			"List<${1:Type}> ${2:Name} = new List<${1:Type}>();"
 		]
 	},
-
 	//Namespace Snippets
 	"Insert namespace": {
 		"prefix": "ns",
@@ -72,7 +79,6 @@
 		"body": "namespace Kira$0${1:.InventorySystem} {",
 		"description": "Insert namespace withought a closing bracket"
 	},
-
 	"Insert Action Event": {
 		"prefix": "ac",
 		"body": "public event Action On$0Event;",
