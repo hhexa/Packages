@@ -1,0 +1,25 @@
+My Goals are:
+
+1. Have a in game Market that recieves orders from "Traders" and then finds matching orders
+   Then executes the order and effects the market value of that commodity
+
+2. Make this a working unity package for an Economy System or Market
+
+
+Developing an Economy System
+
+Questions
+
+1. What does the System take as inputs ?
+2. What does the System do with that data ?
+3. What sort of output will the System do ?
+
+Take in Input
+Commodities : Wood , Water , Gold
+
+Calculate and Store Data
+    - Quantity of the commodoty is currently in the System
+    - Calculate Value of commodoty based on its Supply and Demand
+
+Output
+    - Change the value of the currency ?
