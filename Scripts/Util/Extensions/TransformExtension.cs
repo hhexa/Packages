@@ -8,6 +8,17 @@ using UnityEngine;
 
 public static class TransformExtension
 {
+    private const float DOT_THREASHOLD = 0.5f;
+
+    public static bool IsFacingTarget(this Transform source, Transform target)
+    {
+        Vector3 vectorToTarget = target.position = source.position;
+        vectorToTarget.Normalize();
+
+        float dot = Vector3.Dot(source.forward, vectorToTarget);
+        return dot >= DOT_THREASHOLD;
+    }
+
     public static void LookAtY(this Transform source, Transform target)
     {
         var lookPos = target.position - source.position;
@@ -46,7 +57,7 @@ public static class TransformExtension
 
     //From: https://github.com/foolmoron/PicosRapture/blob/master/Assets/Scripts/Extensions/Vector3Extensions.cs
     //Credit to this guy github.com/foolmoron for making these extensions public
-    
+
     public static Vector2 to2(this Vector3 vector)
     {
         return vector;
